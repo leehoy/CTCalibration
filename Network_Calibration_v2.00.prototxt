@@ -1,0 +1,348 @@
+name: "Calibration CNN for CBCT v2.00"
+
+layer {
+  name: "Train_Data"
+  type: "Data"
+  top: "in_data"
+  include { phase: TRAIN }
+  transform_param { scale: 1}
+  data_param {
+    source: "/home/leehoy12345/tensorflow/data/CalibrationProjection_lmdb"
+    batch_size: 1
+    backend: LMDB
+  }
+}
+
+layer {
+  name: "Train_GT"
+  type: "Data"
+  top: "labels"
+  include { phase: TRAIN }
+  transform_param { scale: 1 }
+  data_param {
+    source: "/home/leehoy12345/tensorflow/data/CalibrationLabel_lmdb"
+    batch_size: 1
+    backend: LMDB
+  }
+}
+
+layer {
+  name: "Test_Data"
+  type: "Data"
+  top: "in_data"
+  include { phase: TEST }
+  transform_param { scale: 1}
+  data_param {
+    source: "/home/leehoy12345/tensorflow/data/CalibrationProjection_Test_lmdb"
+    batch_size: 1
+    backend: LMDB
+ }
+}
+
+layer {
+  name: "Test_GT"
+  type: "Data"
+  top: "labels"
+  include { phase: TEST }
+  transform_param { scale: 1}
+  data_param {
+    source: "/home/leehoy12345/tensorflow/data/CalibrationLabel_Test_lmdb"
+    batch_size: 1
+    backend: LMDB
+  }
+}
+
+layer {
+  name: "Conv_01"
+  type: "Convolution"
+  bottom: "in_data"
+  top: "conv01"
+  param { lr_mult: 1 }
+  param { lr_mult: 2 }
+  convolution_param {
+    num_output: 32
+    kernel_size: 5
+    pad: 0
+    stride: 2
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" }
+  }
+}
+layer {
+  name: "ReLU_01"
+  type: "ReLU"
+  bottom: "conv01"
+  top: "conv01"
+}
+
+layer {
+  name: "Conv_02"
+  type: "Convolution"
+  bottom: "conv01"
+  top: "conv02"
+  param { lr_mult: 1 }
+  param { lr_mult: 2 }
+  convolution_param {
+    num_output: 32
+    kernel_size: 5
+    pad : 0
+    stride: 2
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" }
+  }
+}
+layer {
+  name: "ReLU_02"
+  type: "ReLU"
+  bottom: "conv02"
+  top: "conv02"
+}
+
+layer {
+  name: "Conv_03"
+  type: "Convolution"
+  bottom: "conv02"
+  top: "conv03"
+  param { lr_mult: 1 }
+  param { lr_mult: 2 }
+  convolution_param {
+    num_output: 32
+    kernel_size: 5
+    pad: 0
+    stride: 2
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" }
+  }
+}
+layer {
+  name: "ReLU_03"
+  type: "ReLU"
+  bottom: "conv03"
+  top: "conv03"
+}
+
+layer {
+  name: "Conv_04"
+  type: "Convolution"
+  bottom: "conv03"
+  top: "conv04"
+  param { lr_mult: 1 }
+  param { lr_mult: 2 }
+  convolution_param {
+    num_output: 32
+    kernel_size: 5
+    pad : 0
+    stride: 2
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" }
+  }
+}
+layer {
+  name: "ReLU_04"
+  type: "ReLU"
+  bottom: "conv04"
+  top: "conv04"
+}
+
+layer {
+  name: "Conv_05"
+  type: "Convolution"
+  bottom: "conv04"
+  top: "conv05"
+  param { lr_mult: 1 }
+  param { lr_mult: 2 }
+  convolution_param {
+    num_output: 32
+    kernel_size: 5
+    pad: 0
+    stride: 2
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" }
+  }
+}
+
+layer {
+  name: "ReLU_05"
+  type: "ReLU"
+  bottom: "conv05"
+  top: "conv05"
+}
+
+#layer {
+#  name: "Conv_06"
+#  type: "Convolution"
+#  bottom: "conv05"
+#  top: "conv06"
+#  param { lr_mult: 1 }
+#  param { lr_mult: 2 }
+#  convolution_param {
+#    num_output: 32
+#    kernel_size: 3
+#    pad: 0
+#    stride: 1
+#    weight_filler { type: "xavier" }
+#    bias_filler { type: "constant" }
+#  }
+#}
+
+#layer {
+#  name: "ReLU_06"
+#  type: "ReLU"
+#  bottom: "conv06"
+#  top: "conv06"
+#}
+
+#layer {
+#  name: "Conv_07"
+#  type: "Convolution"
+#  bottom: "conv06"
+#  top: "conv07"
+#  param { lr_mult: 1 }
+#  param { lr_mult: 2 }
+#  convolution_param {
+#    num_output: 32
+#    kernel_size: 3
+#    pad: 1
+#    stride: 1
+#    weight_filler { type: "xavier" }
+#    bias_filler { type: "constant" }
+#  }
+#}
+
+#layer {
+#  name: "ReLU_07"
+#  type: "ReLU"
+#  bottom: "conv07"
+#  top: "conv07"
+#}
+
+#layer {
+#  name: "Conv_08"
+#  type: "Convolution"
+#  bottom: "conv07"
+#  top: "conv08"
+#  param { lr_mult: 1 }
+#  param { lr_mult: 2 }
+#  convolution_param {
+#    num_output: 32
+#    kernel_size: 3
+#    pad: 0
+#    stride: 1
+#    weight_filler { type: "xavier" }
+#    bias_filler { type: "constant" }
+#  }
+#}
+
+#layer {
+#  name: "ReLU_08"
+#  type: "ReLU"
+#  bottom: "conv08"
+#  top: "conv08"
+#}
+
+#layer {
+#  name: "Conv_09"
+#  type: "Convolution"
+#  bottom: "conv08"
+#  top: "conv09"
+#  param { lr_mult: 1 }
+#  param { lr_mult: 2 }
+#  convolution_param {
+#    num_output:32
+#    kernel_size:3
+#    pad: 0
+#    stride: 1
+#    weight_filler { type: "xavier" }
+#    bias_filler { type: "constant" }
+#  }
+#}
+
+#layer {
+#  name: "ReLU_09"
+#  type: "ReLU"
+#  bottom: "conv09"
+#  top: "conv09"
+#}
+
+#layer {
+#  name: "Conv_10"
+#  type: "Convolution"
+#  bottom: "conv09"
+#  top: "conv10"
+#  param { lr_mult: 1 }
+#  param { lr_mult: 2 }
+#  convolution_param {
+#    num_output: 32
+#    kernel_size: 3
+#    pad: 0
+#    stride: 1
+#    weight_filler { type: "xavier" }
+#    bias_filler { type: "constant" }
+#  }
+#}
+#layer {
+#  name: "ReLU_10"
+#  type: "ReLU"
+#  bottom: "conv10"
+#  top: "conv10"
+#}
+layer {
+  name : "FC_01"
+  type : "InnerProduct"
+  bottom : "conv05"
+  top : "fc01"
+  inner_product_param{
+    num_output: 150
+    weight_filler {type: "gaussian" std:0.01}
+    bias_filler {type: "constant"}
+  }
+}
+#layer {
+#  name : "FC_02"
+#  type : "InnerProduct"
+#  bottom : "fc01"
+#  top : "fc02"
+#  inner_product_param {
+#    num_output : 100
+#    weight_filler {type: "gaussian" std: 0.01}
+#    bias_filler {type: "constant"}
+#  }
+#}
+#layer {
+#  name : "FC_03"
+#  type : "InnerProduct"
+#  bottom : "fc02"
+#  top : "fc03"
+#  inner_product_param {
+#    num_output : 50
+#    weight_filler {type: "gaussian" std: 0.01}
+#    bias_filler {type: "constant"}
+#  }
+#}
+layer {
+  name : "FC_04"
+  type : "InnerProduct"
+  bottom : "fc01"
+  top : "fc04"
+  inner_product_param {
+    num_output : 7
+    weight_filler {type: "gaussian" std: 0.01}
+    bias_filler {type: "constant"}
+  }
+}
+layer {
+  name: "loss"
+  type : "EuclideanLoss"
+  bottom : "fc04"
+  bottom : "labels"
+  top : "loss"
+}
+
+#layer{
+#  name: "accuracy"
+#  type: "Accuracy"
+#  bottom : "fc04"
+#  bottom : "labels"
+#  top : "accuracy"
+#  include { phase : TEST}
+#}

@@ -1,0 +1,29 @@
+net: "/home/leehoy12345/caffe/Calibration/Network_Calibration_v2.00.prototxt"
+#test_initialization: false
+# trn input = 5001
+# tst input = 5000
+# traing minibatch = 1
+# one epoch = 5001 iterations
+# testing minibatch = 1
+# one epoch = 5000 iteration
+#
+
+test_iter: 5000
+
+test_interval: 25005		# per every 5 epochs
+
+base_lr: 0.0001			# 0.1 @paper --> not sure ...
+momentum: 0.1			# 0.9 @paper
+weight_decay: 0.0001	# 0.0001 @paper
+
+lr_policy: "step"	# step @paper
+gamma: 1.0		# 0.1 per 10 epochs @paper			--> 0.9
+stepsize: 1000		# 20 epochs @paper  				--> 200
+
+display: 1667		# every one third epoch
+max_iter:500100		# 100 epochs
+
+snapshot:1667		# every one third epoch
+snapshot_prefix: "/home/leehoy12345/tensorflow/data/CalibrationModel/Calibration_v2.00"
+
+solver_mode:CPU
